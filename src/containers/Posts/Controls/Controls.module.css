@@ -1,0 +1,42 @@
+.ToolBar{
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.ToolBar .Button,
+.ToolBar .Ok {
+    padding: 10px;
+    height: 50px;
+    width: 50px;
+    font-size: 14px;
+    color: red;
+    border: none;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-self: flex-end;
+}
+
+.ToolBar .Ok {
+    color: green;
+}
+
+.ToolBar .Button:hover,
+.ToolBar .Ok:hover {
+    cursor: pointer;
+    color: black;
+    background: none;
+}
+
+.ToolBar .Button:focus,
+.ToolBar .Ok:focus,
+.ToolBar .DetailsEditLine:focus,
+.ToolBar .HeaderEditLine:focus {
+    outline: none;
+}
+
+.ToolBar svg {
+    position: relative;
+    top: calc(50% - 7px);
+}

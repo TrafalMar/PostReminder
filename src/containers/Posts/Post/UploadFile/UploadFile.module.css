@@ -1,0 +1,13 @@
+.UploadFile{
+    outline: none;
+}
+
+.UploadFile:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.UploadFile p {
+    margin: 0;
+    text-align: right;
+}

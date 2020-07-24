@@ -1,0 +1,86 @@
+.Post{
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 30%;
+    border: 1px solid gray;
+    margin: 10px;
+    padding: 20px 10px 0 10px;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.Editing {
+    border: 1px dashed red;
+}
+
+.Post .Header,
+.Post .Details {
+    border: 1px solid transparent;
+}
+
+.Post .DetailsEditLine,
+.Post .HeaderEditLine{
+    border: 1px dashed black;
+}
+
+.Post .Header,
+.Post .HeaderEditLine {
+    min-height: 45px;
+    font-size: 24px;
+    font-weight: 500;
+    margin: 0 0 10px 0;
+    width: 100%;
+    padding: 5px 15px;
+    box-sizing: border-box;
+}
+
+.Post .Details,
+.Post .DetailsEditLine,
+.Post .ImageEditLine {
+    display: block;
+    min-height: 33px;
+    margin: 0 0 10px 0;
+    width: 100%;
+    font-size: 16px;
+    padding: 5px 15px;
+    box-sizing: border-box;
+    text-align: justify ;
+}
+
+.Post .ImageEditLine{
+    margin: 0;
+}
+
+.Post .Image{
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.Post .DeleteButton {
+    border: none;
+    background: none;
+
+    display: flex;
+    justify-content: center;
+    align-self: flex-end;
+
+    width: 30px;
+    height: 30px;
+
+    color:red;
+    outline: none;
+    font-size: 16px;
+
+}
+
+.Post .DeleteButton svg {
+    position: relative;
+    top: calc(50% - 8px);
+}
+
+.Post .DeleteButton:hover{
+    cursor: pointer;
+    color: black;
+}
