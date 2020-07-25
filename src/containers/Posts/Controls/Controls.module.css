@@ -1,11 +1,18 @@
-.ToolBar{
+.ToolBar, .ToolBar .Deleting{
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: flex-end;
 }
 
+.Deleting {
+    justify-content: flex-start;
+}
+
 .ToolBar .Button,
-.ToolBar .Ok {
+.ToolBar .Ok, 
+.ToolBar .Thresh,
+.Deleting .YES,
+.Deleting .NO{
     padding: 10px;
     height: 50px;
     width: 50px;
@@ -13,17 +20,21 @@
     color: red;
     border: none;
     background: none;
-    display: flex;
-    justify-content: center;
-    align-self: flex-end;
+}
+.ToolBar .Thresh{
+    margin-right: auto;
 }
 
-.ToolBar .Ok {
+.ToolBar .Ok,
+.Deleting .NO {
     color: green;
 }
 
 .ToolBar .Button:hover,
-.ToolBar .Ok:hover {
+.ToolBar .Ok:hover,
+.ToolBar .Thresh:hover,
+.Deleting .YES:hover,
+.Deleting .NO:hover{
     cursor: pointer;
     color: black;
     background: none;
@@ -31,12 +42,20 @@
 
 .ToolBar .Button:focus,
 .ToolBar .Ok:focus,
+.ToolBar .Thresh:focus,
 .ToolBar .DetailsEditLine:focus,
-.ToolBar .HeaderEditLine:focus {
+.ToolBar .HeaderEditLine:focus,
+.Deleting .NO:focus,
+.Deleting .YES:focus{
     outline: none;
 }
 
 .ToolBar svg {
     position: relative;
     top: calc(50% - 7px);
+}
+
+.Deleting .NO,
+.Deleting .YES{
+    font-weight: bold;
 }

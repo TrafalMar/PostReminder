@@ -5,5 +5,6 @@ export const actionTypes = {
     addField: "ADD_FIELD",
     deleteField: "DELETE_FIELD",
     changeField: "CHANGE_FIELD",
+    deletePost: "DELETE_POST",
     initPosts: "INIT_POSTS"
 }

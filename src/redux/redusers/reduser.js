@@ -18,9 +18,9 @@ const reduser = (state = initialState, action) => {
         });
     }
 
-    const toggleEditMode = () => {
+    const toggleEditMode = (postId) => {
 
-        index = Object.keys(state.posts).indexOf(action.key)
+        index = Object.keys(state.posts).indexOf(postId)
 
         posts[index].editMode = !posts[index].editMode
 
@@ -28,19 +28,17 @@ const reduser = (state = initialState, action) => {
 
     }
 
-    const saveChanges = () => {
+    const saveChanges = (postId) => {
 
-        index = Object.keys(state.posts).indexOf(action.key)
-        console.log(index);
-        console.log(posts);
+        index = Object.keys(state.posts).indexOf(postId)
         posts[index].editMode = false;
 
         return { posts: posts };
     }
 
-    const addField = () => {
+    const addField = (postId, fieldType) => {
 
-        if (action.fieldType === 'backdropClick') return { posts: posts }
+        if (fieldType === 'backdropClick') return { posts: posts }
 
         const getNewFieldByType = (elementType) => {
             switch (elementType) {
@@ -56,15 +54,15 @@ const reduser = (state = initialState, action) => {
         };
 
 
-        const newItem = getNewFieldByType(action.fieldType)
+        const newItem = getNewFieldByType(fieldType)
 
-        index = Object.keys(state.posts).indexOf(action.key)
+        index = Object.keys(state.posts).indexOf(postId)
 
         // Check if new post has items
-        if(posts[index].items === undefined || posts[index].items === null){
+        if (posts[index].items === undefined || posts[index].items === null) {
             posts[index] = {
                 ...posts[index],
-                items:[]
+                items: []
             }
         }
 
@@ -74,21 +72,21 @@ const reduser = (state = initialState, action) => {
         return { posts: posts }
     }
 
-    const deleteField = (postKey, itemKey) => {
+    const deleteField = (postId, itemId) => {
 
-        index = Object.keys(state.posts).indexOf(postKey)
+        index = Object.keys(state.posts).indexOf(postId)
 
         // delete here
-        posts[index].items = Object.keys(posts[index].items).filter(key => key !== itemKey).map(key => (posts[index].items[key]))
+        posts[index].items = Object.keys(posts[index].items).filter(key => key !== itemId).map(key => (posts[index].items[key]))
 
         return { posts: posts }
     }
 
-    const changeField = (postKey, itemKey) => {
+    const changeField = (postId, itemId) => {
 
-        index = Object.keys(state.posts).indexOf(postKey)
+        index = Object.keys(state.posts).indexOf(postId)
 
-        itemIndex = Object.keys(posts[index].items).indexOf(itemKey)
+        itemIndex = Object.keys(posts[index].items).indexOf(itemId)
 
         action.event.persist()
 
@@ -97,23 +95,34 @@ const reduser = (state = initialState, action) => {
         return { posts: posts }
     }
 
+    const deletePost = (postId)=>{
+
+        posts = Object.keys(posts).filter(key => key !== postId).map(key => posts[key])
+
+        console.log(posts);
+
+        return {posts: posts}
+    }
+
     const initPosts = () => {
         return { posts: action.posts }
     }
 
     switch (action.type) {
         case actionTypes.addPost:
-            return addPost(action.id)
+            return addPost()
         case actionTypes.toggleEditMode:
-            return toggleEditMode(action.id)
+            return toggleEditMode(action.key)
         case actionTypes.saveChanges:
-            return saveChanges(action.id)
+            return saveChanges(action.key)
         case actionTypes.addField:
-            return addField(action.id, action.fieldType)
+            return addField(action.key, action.fieldType)
         case actionTypes.deleteField:
             return deleteField(action.postId, action.itemId)
         case actionTypes.changeField:
             return changeField(action.postId, action.itemId)
+        case actionTypes.deletePost:
+            return deletePost(action.key)
         case actionTypes.initPosts:
             return initPosts()
 

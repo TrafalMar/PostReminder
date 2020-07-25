@@ -60,7 +60,7 @@ const post = (props) => {
         <Aux>
             <div onKeyUp={(event) => { if (event.keyCode !== 13) return; props.saveChanges() }} className={!props.editMode ? classes.Post : [classes.Post, classes.Editing].join(' ')}>
                 {props.editMode ? editForm : content}
-                <Controls editMode={props.editMode} editToggler={props.editToggler} addFieldHandler={props.addFieldHandler} postId={props.postId} />
+                <Controls deletePost={props.deletePost} editMode={props.editMode} editToggler={props.editToggler} addFieldHandler={props.addFieldHandler} postId={props.postId} />
             </div >
         </Aux>
     )
