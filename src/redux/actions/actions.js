@@ -1,5 +1,5 @@
 import { actionTypes } from './actionTypes'
-import API from './../../utils/API'
+import API from '../../utils/API'
 
 export const addPost = () => ({
     type: actionTypes.addPost

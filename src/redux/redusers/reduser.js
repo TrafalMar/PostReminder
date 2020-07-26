@@ -10,12 +10,14 @@ const reduser = (state = initialState, action) => {
     var index = null;
     var itemIndex = null;
 
-    const addPost = (id) => {
-        return state.posts.concat({
+    const addPost = () => {
+
+        posts.push({
             items: [],
-            id: id,
             editMode: false
-        });
+        })
+        
+        return { posts: posts }
     }
 
     const toggleEditMode = (postId) => {
@@ -95,13 +97,13 @@ const reduser = (state = initialState, action) => {
         return { posts: posts }
     }
 
-    const deletePost = (postId)=>{
+    const deletePost = (postId) => {
 
         posts = Object.keys(posts).filter(key => key !== postId).map(key => posts[key])
 
         console.log(posts);
 
-        return {posts: posts}
+        return { posts: posts }
     }
 
     const initPosts = () => {

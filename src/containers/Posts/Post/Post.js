@@ -1,12 +1,13 @@
 import React from 'react'
-import Controls from './../Controls/Controls'
+import PostControls from './../Controls/PostControls/PostControls'
 import Aux from '../../../hoc/_Aux/_Aux'
 import UploadFile from './UploadFile/UploadFile'
 import { FaTimes } from 'react-icons/fa'
+import CustomButton from './../../customElements/Button/Button'
 
 import classes from './Post.module.css'
 
-const post = (props) => {
+const Post = (props) => {
 
     const content = []
     const editForm = []
@@ -14,7 +15,7 @@ const post = (props) => {
     if (props.items !== null && props.items !== undefined) {
         Object.keys(props.items).map(key => {
 
-            editForm.push(<button key={'button' + key} className={classes.DeleteButton} onClick={() => props.deleteField(props.postId, key)} ><FaTimes /></button>)
+            editForm.push(<CustomButton key={'button' + key} color='red' style={{fontSize:'16px',  padding:"5px 0 0 0", height:"auto", marginLeft:'auto'}} onClick={() => props.deleteField(props.postId, key)} ><FaTimes /></CustomButton>)
 
             switch (props.items[key].type) {
                 case 'Title':
@@ -60,10 +61,10 @@ const post = (props) => {
         <Aux>
             <div onKeyUp={(event) => { if (event.keyCode !== 13) return; props.saveChanges() }} className={!props.editMode ? classes.Post : [classes.Post, classes.Editing].join(' ')}>
                 {props.editMode ? editForm : content}
-                <Controls deletePost={props.deletePost} editMode={props.editMode} editToggler={props.editToggler} addFieldHandler={props.addFieldHandler} postId={props.postId} />
+                <PostControls deletePost={props.deletePost} editMode={props.editMode} editToggler={props.editToggler} addFieldHandler={props.addFieldHandler} postId={props.postId} />
             </div >
         </Aux>
     )
 }
 
-export default post
+export default Post

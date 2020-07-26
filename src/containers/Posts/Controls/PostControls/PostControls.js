@@ -2,14 +2,14 @@
 import { FaPencilAlt, FaSave, FaPlus, FaTrash } from 'react-icons/fa'
 import React, { Component } from 'react'
 
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import CustomButton from './../../../customElements/Button/Button'
 
-import classes from './Controls.module.css'
-import Aux from '../../../hoc/_Aux/_Aux';
+import classes from './PostControls.module.css'
+import Aux from '../../../../hoc/_Aux/_Aux';
 
-class Controls extends Component {
+class PostControls extends Component {
 
     state = {
         anchorEl: null,
@@ -29,7 +29,7 @@ class Controls extends Component {
         this.setState((prevState) => ({ ...prevState, isDeleting: param }))
     }
 
-    
+
 
     render() {
 
@@ -38,17 +38,17 @@ class Controls extends Component {
                 {
                     this.state.isDeleting ?
                         <Aux >
-                            <button className={classes.YES} onClick={this.props.deletePost} >YES</button>
-                            <button className={classes.NO} onClick={()=>this.deletingHandler(false)} >NO</button>
+                            <CustomButton color="red" bold="true" onClick={this.props.deletePost}>YES</CustomButton>
+                            <CustomButton color="green" bold="true" onClick={() => this.deletingHandler(false)}>NO</CustomButton>
                         </Aux>
                         : <Aux>
                             {
                                 this.props.editMode ?
                                     <Aux>
-                                        <button className={!this.props.editMode ? classes.Button : classes.Thresh} onClick={()=>this.deletingHandler(true)} ><FaTrash /></button>
-                                        <Button className={classes.Ok} aria-controls="simple-menu" aria-haspopup="true" onClick={this.handleClickOnPlus} >
+                                        <CustomButton color="red" style={{marginRight:'auto'}} onClick={() => this.deletingHandler(true)}><FaTrash /></CustomButton>
+                                        <CustomButton color="green" onClick={this.handleClickOnPlus} >
                                             <FaPlus />
-                                        </Button>
+                                        </CustomButton>
                                     </Aux>
                                     : null
                             }
@@ -64,8 +64,7 @@ class Controls extends Component {
                                 <MenuItem onClick={() => { this.handleCloseMenu(this.props.postId, 'Image') }}>Image</MenuItem>
                             </Menu>
 
-
-                            <button className={!this.props.editMode ? classes.Button : classes.Ok} onClick={this.props.editToggler} >{this.props.editMode ? <FaSave /> : <FaPencilAlt />}</button>
+                            <CustomButton color="red" onClick={this.props.editToggler}>{this.props.editMode ? <FaSave /> : <FaPencilAlt />}</CustomButton>
                         </Aux>
                 }
 
@@ -74,4 +73,4 @@ class Controls extends Component {
     }
 }
 
-export default Controls
+export default PostControls

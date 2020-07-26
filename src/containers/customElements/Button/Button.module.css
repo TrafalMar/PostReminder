@@ -1,0 +1,33 @@
+.Button {
+    padding: 10px;
+    height: 50px;
+    min-width: 50px;
+    font-size: 14px;
+    border: none;
+    background: none;
+    outline: none;
+    display:inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Button:hover{
+    cursor: pointer;
+    color:black
+}
+
+.Red{
+    color: red
+}
+
+.Green{
+    color: green
+}
+
+.Black{
+    color: black
+}
+
+.Bold{
+    font-weight: bold;
+}

@@ -1,0 +1,6 @@
+.ToolBar{
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
