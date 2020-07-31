@@ -1,4 +1,4 @@
-import { actionTypes } from './../actions/actionTypes'
+import { actionTypes } from '../actions/actionTypes'
 
 const initialState = {
     posts: []
@@ -90,9 +90,7 @@ const reduser = (state = initialState, action) => {
 
         itemIndex = Object.keys(posts[index].items).indexOf(itemId)
 
-        action.event.persist()
-
-        posts[index].items[itemIndex].context = action.event.target.value
+        posts[index].items[itemIndex].context = action.value
 
         return { posts: posts }
     }

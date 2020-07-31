@@ -20,9 +20,9 @@ export const deletePost = (key) => {
     }
 }
 
-const savePosts = (post, key) => {
+const savePosts = (post, key, token) => {
     return dispatch => {
-        API.put(`/posts/${key}.json`, {
+        API.put(`/posts/${key}.json?auth=`+token, {
             ...post,
             items: post.items,
             editMode: false
@@ -38,9 +38,9 @@ const savePosts = (post, key) => {
     }
 }
 
-export const toggleEditMode = (post, key) => {
+export const toggleEditMode = (post, key, token) => {
     if (post.editMode) {
-        return savePosts(post, key)
+        return savePosts(post, key, token)
     }
     else {
         return {
@@ -66,11 +66,11 @@ export const changeField = (postId, itemId, event) => ({
     type: actionTypes.changeField,
     postId,
     itemId,
-    event
+    value: event.target.value
 })
 
-export const saveChanges = (post, key) => {
-    return savePosts(post, key)
+export const saveChanges = (post, key, token) => {
+    return savePosts(post, key, token)
 }
 
 const setPosts = (posts) => {
@@ -80,9 +80,9 @@ const setPosts = (posts) => {
     }
 }
 
-export const initPosts = () => {
+export const initPosts = (token) => {
     return dispatch => {
-        API.get('/posts.json').then((res) => {
+        API.get('/posts.json?auth=' + token).then((res) => {
             dispatch(setPosts(res.data))
         }).catch((err) => {
             console.log(err);

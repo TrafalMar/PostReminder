@@ -11,8 +11,9 @@ import { addPost, toggleEditMode, saveChanges, addField, deleteField, changeFiel
 class Posts extends Component {
 
     componentDidMount() {
-        this.props.initPosts()
+        this.props.initPosts(this.props.token)
     }
+    
 
     render() {
         return (
@@ -26,12 +27,12 @@ class Posts extends Component {
                                 postId={key}
                                 items={this.props.posts[key].items}
                                 editMode={this.props.posts[key].editMode}
-                                editToggler={() => this.props.toggleEditMode(this.props.posts[key], key)}
+                                editToggler={() => this.props.toggleEditMode(this.props.posts[key], key, this.props.token)}
                                 addFieldHandler={this.props.addField}
                                 deleteField={this.props.deleteField}
                                 changeField={this.props.changeField}
                                 deletePost={() => this.props.deletePost(key)}
-                                saveChanges={() => this.props.saveChanges(this.props.posts[key], key)}
+                                saveChanges={() => this.props.saveChanges(this.props.posts[key], key, this.props.token)}
                             />
                         })}
                 </div>
@@ -41,18 +42,19 @@ class Posts extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    posts: [...state.posts]
+    posts: [...state.posts.posts],
+    token: state.auth.idToken
 })
 
 const mapDispatchToProps = (dispatch) => ({
     addPost: () => dispatch(addPost()),
-    toggleEditMode: (post, key) => dispatch(toggleEditMode(post, key)),
-    saveChanges: (post, key) => dispatch(saveChanges(post, key)),
+    toggleEditMode: (post, key, token) => dispatch(toggleEditMode(post, key, token)),
+    saveChanges: (post, key, token) => dispatch(saveChanges(post, key, token)),
     addField: (id, fieldType) => dispatch(addField(id, fieldType)),
     deleteField: (postId, itemId) => dispatch(deleteField(postId, itemId)),
     changeField: (postId, itemId, input) => dispatch(changeField(postId, itemId, input)),
     deletePost: (postId) => dispatch(deletePost(postId)),
-    initPosts: () => dispatch(initPosts())
+    initPosts: (token) => dispatch(initPosts(token))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts)

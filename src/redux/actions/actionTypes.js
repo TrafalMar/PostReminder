@@ -6,5 +6,8 @@ export const actionTypes = {
     deleteField: "DELETE_FIELD",
     changeField: "CHANGE_FIELD",
     deletePost: "DELETE_POST",
-    initPosts: "INIT_POSTS"
+    initPosts: "INIT_POSTS",
+    succesfulSingin: "SUCCESFUL_SINGIN",
+    authError: "AUTH_ERROR",
+    authLogout: "AUTH_LOGOUT"
 }

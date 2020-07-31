@@ -8,7 +8,7 @@
     align-self: center;
     margin: auto;
     box-sizing: border-box;
-    padding: 30px;
+    padding: 10px 30px;
     box-shadow: 0 0 5px rgba(0,0,0,.2);
 }
 
@@ -28,22 +28,10 @@
 
 /* Button styles */
 
-.Auth button {
-    display: block;
-    border-radius: 0;
-    border: 1px solid gray;
-    padding: 10px 15px;
-    margin:  15px auto 0 auto;
-    background: white;
+.Auth .ButtonsPanel {
+    display: flex;
+    justify-content: space-around;
 }
-
-.Auth button:hover{
-    background: rgb(231, 230, 230);
-    cursor: pointer;
-}
-
-.Auth button:focus{
-    border-radius: 0;
-    border: 1px solid gray;
-    outline: none;
+.Auth Button:hover{
+    background: rgb(231, 230, 230, .2);
 }

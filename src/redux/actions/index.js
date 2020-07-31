@@ -5,4 +5,7 @@ export {
     addField,
     deleteField,
     changeField
-} from './counter'
+} from './actions'
+export {
+    auth
+} from './auth'
