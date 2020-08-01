@@ -1,41 +1,38 @@
 import { actionTypes } from '../actions/actionTypes'
 
 const initialState = {
-    posts: []
+    posts: {}
 }
 
 const reduser = (state = initialState, action) => {
 
-    var { posts } = state;
-    var index = null;
-    var itemIndex = null;
+    let { posts } = state;
+    let itemIndex = null;
 
     const addPost = () => {
 
-        posts.push({
+        let newPost = ({
             items: [],
             editMode: false
         })
-        
-        return { posts: posts }
+
+        let lastKey = parseInt(Object.keys(posts)[Object.keys(posts).length-1])
+        return { posts: {...posts, [lastKey+1]:newPost} }
     }
 
     const toggleEditMode = (postId) => {
 
-        index = Object.keys(state.posts).indexOf(postId)
+        posts[postId].editMode = !posts[postId].editMode
 
-        posts[index].editMode = !posts[index].editMode
-
-        return { posts: posts }
+        return { posts: {...posts} }
 
     }
 
     const saveChanges = (postId) => {
 
-        index = Object.keys(state.posts).indexOf(postId)
-        posts[index].editMode = false;
+        posts[postId].editMode = false;
 
-        return { posts: posts };
+        return { posts: {...posts} };
     }
 
     const addField = (postId, fieldType) => {
@@ -58,48 +55,40 @@ const reduser = (state = initialState, action) => {
 
         const newItem = getNewFieldByType(fieldType)
 
-        index = Object.keys(state.posts).indexOf(postId)
-
         // Check if new post has items
-        if (posts[index].items === undefined || posts[index].items === null) {
-            posts[index] = {
-                ...posts[index],
+        if (posts[postId].items === undefined || posts[postId].items === null) {
+            posts[postId] = {
+                ...posts[postId],
                 items: []
             }
         }
 
         // Post here
-        posts[index].items.push(newItem)
+        posts[postId].items.push(newItem)
 
-        return { posts: posts }
+        return { posts: {...posts} }
     }
 
     const deleteField = (postId, itemId) => {
 
-        index = Object.keys(state.posts).indexOf(postId)
-
         // delete here
-        posts[index].items = Object.keys(posts[index].items).filter(key => key !== itemId).map(key => (posts[index].items[key]))
+        posts[postId].items = Object.keys(posts[postId].items).filter(key => key !== itemId).map(key => (posts[postId].items[key]))
 
-        return { posts: posts }
+        return { posts: {...posts} }
     }
 
     const changeField = (postId, itemId) => {
 
-        index = Object.keys(state.posts).indexOf(postId)
+        itemIndex = Object.keys(posts[postId].items).indexOf(itemId)
 
-        itemIndex = Object.keys(posts[index].items).indexOf(itemId)
+        posts[postId].items[itemIndex].context = action.value
 
-        posts[index].items[itemIndex].context = action.value
-
-        return { posts: posts }
+        return { posts: {...posts} }
     }
 
     const deletePost = (postId) => {
 
         posts = Object.keys(posts).filter(key => key !== postId).map(key => posts[key])
-
-        console.log(posts);
 
         return { posts: posts }
     }

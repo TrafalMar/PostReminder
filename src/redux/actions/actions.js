@@ -6,7 +6,6 @@ export const addPost = () => ({
 })
 
 export const deletePost = (key) => {
-    console.log("deleting");
     return dispatch => {
         API.delete(`/posts/${key}.json`)
             .then(res => {
@@ -22,7 +21,7 @@ export const deletePost = (key) => {
 
 const savePosts = (post, key, token) => {
     return dispatch => {
-        API.put(`/posts/${key}.json?auth=`+token, {
+        API.put(`/posts/${key}.json?auth=` + token, {
             ...post,
             items: post.items,
             editMode: false
@@ -81,8 +80,18 @@ const setPosts = (posts) => {
 }
 
 export const initPosts = (token) => {
+
     return dispatch => {
         API.get('/posts.json?auth=' + token).then((res) => {
+
+            // let filteredPosts = {}
+            // res.data.map((post, index) => {
+            //     if (post !== null) {
+            //         return filteredPosts[index] = post
+            //     }
+            //     else return null
+            // })
+
             dispatch(setPosts(res.data))
         }).catch((err) => {
             console.log(err);

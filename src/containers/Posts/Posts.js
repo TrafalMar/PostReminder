@@ -7,21 +7,31 @@ import Post from './Post/Post'
 import PostsControls from './Controls/PostsControls/PostsControls'
 
 import { addPost, toggleEditMode, saveChanges, addField, deleteField, changeField, initPosts, deletePost } from '../../redux/actions/actions'
+import { Redirect } from 'react-router-dom'
 
 class Posts extends Component {
 
     componentDidMount() {
-        this.props.initPosts(this.props.token)
+        if (this.props.isAuthenticated) {
+            this.props.initPosts(this.props.token)
+        }
     }
-    
 
     render() {
+
+        let authRedirect = null
+        if(!this.props.isAuthenticated){
+            authRedirect = <Redirect to='/auth'/>
+        }
+
         return (
             <Aux>
-                <PostsControls addPost={this.props.addPost} />
+                
+                {authRedirect}
+                {this.props.isAuthenticated ? <PostsControls addPost={this.props.addPost} /> : null}
                 <div className={classes.Posts}>
-                    {
-                        Object.keys(this.props.posts).map((key) => {
+                    { this.props.isAuthenticated ? 
+                        Object.keys(this.props.posts).reverse().map(key => {
                             return <Post
                                 key={key}
                                 postId={key}
@@ -34,7 +44,7 @@ class Posts extends Component {
                                 deletePost={() => this.props.deletePost(key)}
                                 saveChanges={() => this.props.saveChanges(this.props.posts[key], key, this.props.token)}
                             />
-                        })}
+                        }) : null}
                 </div>
             </Aux>
         )
@@ -42,8 +52,9 @@ class Posts extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    posts: [...state.posts.posts],
-    token: state.auth.idToken
+    posts: state.posts.posts,
+    token: state.auth.idToken,
+    isAuthenticated: state.auth.idToken !== null
 })
 
 const mapDispatchToProps = (dispatch) => ({

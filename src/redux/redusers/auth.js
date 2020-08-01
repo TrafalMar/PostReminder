@@ -3,8 +3,8 @@ import { actionTypes } from './../actions/actionTypes'
 const initialState = {
     localId: null,
     idToken: null,
-    error: null,
-    isLoading: false
+    errorMessage: null,
+    isLoading: false,
 }
 
 const authLogout = (state, action) =>{
@@ -20,14 +20,14 @@ const succesfulSingIn = (state, action) => {
         ...state,
         localId: action.localId,
         idToken: action.idToken,
-        error: null
+        errorMessage: null
     }
 }
 
 const authError = (state, action) =>{
     return {
         ...state,
-        error: action.error
+        errorMessage: action.errorMessage
     }
 }
 

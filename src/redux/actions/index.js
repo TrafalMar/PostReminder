@@ -7,5 +7,7 @@ export {
     changeField
 } from './actions'
 export {
-    auth
+    auth,
+    logout,
+    checkAuthOnReload
 } from './auth'
