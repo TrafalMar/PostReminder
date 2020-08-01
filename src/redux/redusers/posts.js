@@ -87,8 +87,9 @@ const reduser = (state = initialState, action) => {
     }
 
     const deletePost = (postId) => {
-
-        posts = Object.keys(posts).filter(key => key !== postId).map(key => posts[key])
+        const filteredKeys = Object.keys(posts).filter(key => key !== postId )
+        const updatedPosts = Object.assign({},  ...Array.from(filteredKeys, (key)=>({[key]:posts[key]})))
+        posts = updatedPosts
 
         return { posts: posts }
     }

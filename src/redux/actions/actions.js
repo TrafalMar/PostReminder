@@ -84,15 +84,19 @@ export const initPosts = (token) => {
     return dispatch => {
         API.get('/posts.json?auth=' + token).then((res) => {
 
-            // let filteredPosts = {}
-            // res.data.map((post, index) => {
-            //     if (post !== null) {
-            //         return filteredPosts[index] = post
-            //     }
-            //     else return null
-            // })
+            let filteredPosts = {}
+            if (Array.isArray(res.data)) {
+                res.data.map((post, index) => {
+                    if (post !== null) {
+                        return filteredPosts[index] = post
+                    }
+                    else return null
+                })
+            }else{
+                filteredPosts = res.data
+            }
 
-            dispatch(setPosts(res.data))
+            dispatch(setPosts(filteredPosts))
         }).catch((err) => {
             console.log(err);
         })
