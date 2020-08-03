@@ -9,15 +9,15 @@ const reduser = (state = initialState, action) => {
     let { posts } = state;
     let itemIndex = null;
 
-    const addPost = () => {
+    const addPost = (userId) => {
 
         let newPost = ({
             items: [],
-            editMode: false
+            editMode: false,
+            userId: userId
         })
 
-        let lastKey = parseInt(Object.keys(posts)[Object.keys(posts).length-1])
-        return { posts: {...posts, [lastKey+1]:newPost} }
+        return { posts: {...posts, [new Date().getTime()+userId]:newPost} }
     }
 
     const toggleEditMode = (postId) => {
@@ -100,7 +100,7 @@ const reduser = (state = initialState, action) => {
 
     switch (action.type) {
         case actionTypes.addPost:
-            return addPost()
+            return addPost(action.userId)
         case actionTypes.toggleEditMode:
             return toggleEditMode(action.key)
         case actionTypes.saveChanges:

@@ -12,29 +12,27 @@ import { Redirect } from 'react-router-dom'
 class Posts extends Component {
 
     componentDidMount() {
-        if (this.props.isAuthenticated) {
-            this.props.initPosts(this.props.token)
-        }
+        this.props.initPosts(this.props.token, this.props.userId)
     }
 
     render() {
 
-        let authRedirect = null
-        if(!this.props.isAuthenticated){
-            authRedirect = <Redirect to='/auth'/>
-        }
+        // let authRedirect = null
+        // if (!this.props.isAuthenticated) {
+        //     authRedirect = <Redirect to='/auth' />
+        // }
 
         return (
             <Aux>
-                
-                {authRedirect}
-                {this.props.isAuthenticated ? <PostsControls addPost={this.props.addPost} /> : null}
+                {/* {authRedirect} */}
+                {this.props.isAuthenticated ? <PostsControls addPost={() => this.props.addPost(this.props.userId)} /> : null}
                 <div className={classes.Posts}>
-                    { this.props.isAuthenticated ? 
+                    {this.props.isAuthenticated ?
                         Object.keys(this.props.posts).reverse().map(key => {
                             return <Post
                                 key={key}
                                 postId={key}
+                                userId = {this.props.posts[key].userId}
                                 items={this.props.posts[key].items}
                                 editMode={this.props.posts[key].editMode}
                                 editToggler={() => this.props.toggleEditMode(this.props.posts[key], key, this.props.token)}
@@ -54,18 +52,18 @@ class Posts extends Component {
 const mapStateToProps = (state) => ({
     posts: state.posts.posts,
     token: state.auth.idToken,
-    isAuthenticated: state.auth.idToken !== null
+    isAuthenticated: state.auth.idToken !== null,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    addPost: () => dispatch(addPost()),
+    addPost: (userId) => dispatch(addPost(userId)),
     toggleEditMode: (post, key, token) => dispatch(toggleEditMode(post, key, token)),
     saveChanges: (post, key, token) => dispatch(saveChanges(post, key, token)),
     addField: (id, fieldType) => dispatch(addField(id, fieldType)),
     deleteField: (postId, itemId) => dispatch(deleteField(postId, itemId)),
     changeField: (postId, itemId, input) => dispatch(changeField(postId, itemId, input)),
     deletePost: (postId) => dispatch(deletePost(postId)),
-    initPosts: (token) => dispatch(initPosts(token))
+    initPosts: (token, userId) => dispatch(initPosts(token, userId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts)

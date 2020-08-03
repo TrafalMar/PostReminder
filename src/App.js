@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route, BrowserRouter as Router, Link } from 'react-router-dom';
+import { Switch, Route, BrowserRouter as Router, Link, Redirect } from 'react-router-dom';
 
 import Auth from './containers/Auth/Auth'
 import Logout from './containers/Auth/Logout/Logout'
@@ -10,30 +10,53 @@ import * as action from './redux/actions/index'
 
 class App extends Component {
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.tryAutoSingIn()
   }
 
   render() {
+
+    let routes = (
+      <Switch>
+        <Route path='/auth' component={Auth} />
+        <Route path='/allposts' component={Posts} />
+        <Redirect to='/auth' />
+      </Switch>
+    )
+
+    let links = (
+      <ul>
+        <li><Link to="/auth">Authenticate</Link></li>
+        <li><Link to="/allposts">All posts</Link></li>
+      </ul>
+    )
+
+    if (this.props.isAuthenticated) {
+      routes = (
+        <Switch>
+          <Route path='/logout' component={Logout} />
+          <Route path='/allposts' component={Posts} />
+          <Route path='/' component={()=><Posts userId={this.props.userId}/>} />
+          <Redirect to='/' />
+        </Switch>
+      )
+
+      links = (
+        <ul>
+          <li><Link to="/">My posts</Link></li>
+          <li><Link to="/allposts">All posts</Link></li>
+          <li><Link to="/logout">Logout</Link></li>
+        </ul>
+      )
+    }
+
     return (
       <Router>
         <div className={classes.App}>
           <nav>
-            <ul>
-              {this.props.isAuthenticated ? <li><Link to="/">Home</Link></li> : null}
-              <li>
-                {!this.props.isAuthenticated ?
-                  <Link to="/auth">Authenticate</Link> :
-                  <Link to="/logout">Logout</Link>}
-              </li>
-            </ul>
+            {links}
           </nav>
-
-          <Switch>
-            <Route path='/logout' component={Logout} />
-            <Route path='/auth' component={Auth} />
-            <Route path='/' component={Posts} />
-          </Switch>
+          {routes}
         </div>
       </Router>
     )
@@ -41,12 +64,13 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.idToken !== null
+  isAuthenticated: state.auth.idToken !== null,
+  userId: state.auth.localId
 })
 
-const mapDispatchToProps = dispatch=>{
+const mapDispatchToProps = dispatch => {
   return {
-    tryAutoSingIn: ()=>dispatch(action.checkAuthOnReload())
+    tryAutoSingIn: () => dispatch(action.checkAuthOnReload())
   }
 }
 

@@ -1,8 +1,9 @@
 import { actionTypes } from './actionTypes'
 import API from '../../utils/API'
 
-export const addPost = () => ({
-    type: actionTypes.addPost
+export const addPost = (userId) => ({
+    type: actionTypes.addPost,
+    userId
 })
 
 export const deletePost = (key) => {
@@ -79,11 +80,16 @@ const setPosts = (posts) => {
     }
 }
 
-export const initPosts = (token) => {
+export const initPosts = (token, userId) => {
 
     return dispatch => {
-        API.get('/posts.json?auth=' + token).then((res) => {
-
+        let queryParams = ""
+        if (token && userId) {
+            queryParams = userId ? `?auth=` + token + `&orderBy="userId"&equalTo="` + userId + `"` : `?auth=` + token
+        }
+        
+        API.get('/posts.json' + queryParams).then((res) => {
+            
             let filteredPosts = {}
             if (Array.isArray(res.data)) {
                 res.data.map((post, index) => {
@@ -92,10 +98,9 @@ export const initPosts = (token) => {
                     }
                     else return null
                 })
-            }else{
+            } else {
                 filteredPosts = res.data
             }
-
             dispatch(setPosts(filteredPosts))
         }).catch((err) => {
             console.log(err);
