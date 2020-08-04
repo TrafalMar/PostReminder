@@ -12,10 +12,9 @@ import auth from './redux/redusers/auth'
 const redusers = combineReducers({
   posts,
   auth
-}) 
+})
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-
 const store = createStore(redusers, composeEnhancers(applyMiddleware(thunk)))
 
 ReactDOM.render(

@@ -1,0 +1,22 @@
+.Menu {
+    width: 90px;
+    background-color: none;
+}
+
+.Menu a {
+    display: block;
+    text-align: center;
+    padding: 16px;
+    color: gray;
+    font-size: 36px;
+}
+
+.Menu a:hover {
+    background-color: none;
+    color:black;
+}
+
+.Menu a.active {
+    background-color: none;
+    color:black;
+}

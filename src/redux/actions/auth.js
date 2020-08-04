@@ -19,7 +19,6 @@ export const checkAuthTimeout = (expirationTime) => {
 }
 
 export const checkAuthOnReload = () => {
-
     return dispatch => {
         const idToken = localStorage.getItem('idToken')
         const localId = localStorage.getItem('localId')
@@ -30,6 +29,7 @@ export const checkAuthOnReload = () => {
             if (expirationDate < new Date()) {
                 dispatch(logout())
             } else {
+                
                 dispatch({
                     type: actionTypes.succesfulSingin,
                     idToken: idToken,

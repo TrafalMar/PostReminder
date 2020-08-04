@@ -13,11 +13,6 @@ class Auth extends Component {
         isSignUp: true,
     }
 
-    submitHandler = (event) => {
-        event.preventDefault()
-        console.log(this.state)
-    }
-
     toggleSignUpHandler = (event) => {
         event.preventDefault()
         this.setState(prevState => ({ isSignUp: !prevState.isSignUp }))
@@ -32,7 +27,7 @@ class Auth extends Component {
 
         let authRedirect = null
         if(this.props.isAuthenticated){
-            authRedirect = <Redirect to='/'/>
+            authRedirect = <Redirect to='/home'/>
         }
 
         return (

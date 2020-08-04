@@ -12,19 +12,21 @@ import { Redirect } from 'react-router-dom'
 class Posts extends Component {
 
     componentDidMount() {
-        this.props.initPosts(this.props.token, this.props.userId)
+        if (this.props.isAuthenticated) {
+            this.props.initPosts(this.props.token, this.props.userId)
+        }
     }
 
     render() {
 
-        // let authRedirect = null
-        // if (!this.props.isAuthenticated) {
-        //     authRedirect = <Redirect to='/auth' />
-        // }
+        let authRedirect = null
+        if (!this.props.isAuthenticated) {
+            authRedirect = <Redirect to='/auth' />
+        }
 
         return (
             <Aux>
-                {/* {authRedirect} */}
+                {authRedirect}
                 {this.props.isAuthenticated ? <PostsControls addPost={() => this.props.addPost(this.props.userId)} /> : null}
                 <div className={classes.Posts}>
                     {this.props.isAuthenticated ?
@@ -32,7 +34,7 @@ class Posts extends Component {
                             return <Post
                                 key={key}
                                 postId={key}
-                                userId = {this.props.posts[key].userId}
+                                userId={this.props.posts[key].userId}
                                 items={this.props.posts[key].items}
                                 editMode={this.props.posts[key].editMode}
                                 editToggler={() => this.props.toggleEditMode(this.props.posts[key], key, this.props.token)}
