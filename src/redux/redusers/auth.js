@@ -15,7 +15,7 @@ const authLogout = (state, action) =>{
     }
 }
 
-const succesfulSingIn = (state, action) => {
+const successfulSingUp = (state, action) => {
     return {
         ...state,
         localId: action.localId,
@@ -33,9 +33,9 @@ const authError = (state, action) =>{
 
 const auth = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.succesfulSingin: return succesfulSingIn(state, action)
-        case actionTypes.authError: return authError(state, action)
-        case actionTypes.authLogout: return authLogout(state, action)
+        case actionTypes.SUCCESSFUL_SINGUP: return successfulSingUp(state, action)
+        case actionTypes.AUTH_ERROR: return authError(state, action)
+        case actionTypes.AUTH_LOGOUT: return authLogout(state, action)
         default: return state
     }
 }

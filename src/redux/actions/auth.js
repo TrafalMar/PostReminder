@@ -6,7 +6,7 @@ export const logout = () => {
     localStorage.removeItem('localId')
     localStorage.removeItem('expirationDate')
     return {
-        type: actionTypes.authLogout,
+        type: actionTypes.AUTH_LOGOUT,
     }
 }
 
@@ -18,60 +18,61 @@ export const checkAuthTimeout = (expirationTime) => {
     }
 }
 
+const onSuccess = (idToken, localId) => (
+    {
+        type: actionTypes.SUCCESSFUL_SINGUP,
+        idToken: idToken,
+        localId: localId
+    }
+)
+
+const onError = (error)=>(
+    {
+        type: actionTypes.AUTH_ERROR,
+        errorMessage: error.response.data.error.message
+    }
+)
+
+const getAuthDataFromLocalStorage = () => {
+    const idToken = localStorage.getItem('idToken')
+    const localId = localStorage.getItem('localId')
+    const expirationDate = new Date(localStorage.getItem('expirationDate'))
+    return { idToken, localId, expirationDate }
+}
+
 export const checkAuthOnReload = () => {
     return dispatch => {
-        const idToken = localStorage.getItem('idToken')
-        const localId = localStorage.getItem('localId')
-        const expirationDate = new Date(localStorage.getItem('expirationDate'))
-        if (!idToken) {
+        let { idToken, localId, expirationDate } = getAuthDataFromLocalStorage();
+        let dateHasExpired = expirationDate < new Date()
+        if (!idToken || dateHasExpired) {
             dispatch(logout())
         } else {
-            if (expirationDate < new Date()) {
-                dispatch(logout())
-            } else {
-                
-                dispatch({
-                    type: actionTypes.succesfulSingin,
-                    idToken: idToken,
-                    localId: localId
-                })
-                const expirationTime = (expirationDate.getTime() - new Date().getTime()) / 1000
-                dispatch(checkAuthTimeout(expirationTime))
-            }
+            dispatch(onSuccess(idToken, localId))
+            const expirationTime = (expirationDate.getTime() - new Date().getTime()) / 1000
+            dispatch(checkAuthTimeout(expirationTime))
         }
     }
 }
 
+
 export const auth = (email, password, isSignUp) => {
     return dispatch => {
         const key = 'AIzaSyAw7SE-rUpkB5kAf0bVba7uzjOFem6UtQs'
-        const authData = {
-            email: email,
-            password: password,
-            returnSecureToken: true
-        }
         let url = isSignUp ?
             `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${key}` :
             `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${key}`
 
-        axios.post(url, authData)
+        axios.post(url, {email,password, returnSecureToken:true})
             .then(res => {
-                dispatch({
-                    type: actionTypes.succesfulSingin,
-                    localId: res.data.localId,
-                    idToken: res.data.idToken
-                })
+                dispatch(onSuccess(res.data.idToken, res.data.localId))
                 dispatch(checkAuthTimeout(res.data.expiresIn))
                 localStorage.setItem('idToken', res.data.idToken)
                 localStorage.setItem('localId', res.data.localId)
-                localStorage.setItem('expirationDate', new Date(new Date().getTime() + res.data.expiresIn*1000))
+                localStorage.setItem('expirationDate', new Date(new Date().getTime() + res.data.expiresIn * 1000))
             })
             .catch(error => {
                 console.log(error.response.data.error.message);
-                dispatch({
-                    type: actionTypes.authError,
-                    errorMessage: error.response.data.error.message
-                })
+                dispatch(onError(error))
             })
     }
 }

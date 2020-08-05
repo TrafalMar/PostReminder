@@ -6,38 +6,38 @@ const initialState = {
 
 const reduser = (state = initialState, action) => {
 
-    let { posts } = state;
-    let itemIndex = null;
+    let newPosts = { ...state.posts };
 
     const addPost = (userId) => {
 
-        let newPost = ({
+        const newPost = ({
             items: [],
             editMode: false,
-            userId: userId
+            userId: userId,
+            date: action.time
         })
 
-        return { posts: {...posts, [new Date().getTime()+userId]:newPost} }
+        return { posts: { ...newPosts, [action.time + userId]: newPost } }
     }
 
     const toggleEditMode = (postId) => {
 
-        posts[postId].editMode = !posts[postId].editMode
+        newPosts[postId].editMode = !newPosts[postId].editMode
 
-        return { posts: {...posts} }
+        return { posts: { ...newPosts } }
 
     }
 
-    const saveChanges = (postId) => {
+    const disableEditMode = (postId) => {
 
-        posts[postId].editMode = false;
+        newPosts[postId].editMode = false;
 
-        return { posts: {...posts} };
+        return { posts: { ...newPosts } };
     }
 
     const addField = (postId, fieldType) => {
 
-        if (fieldType === 'backdropClick') return { posts: posts }
+        if (fieldType === 'backdropClick') return { posts: newPosts }
 
         const getNewFieldByType = (elementType) => {
             switch (elementType) {
@@ -56,42 +56,40 @@ const reduser = (state = initialState, action) => {
         const newItem = getNewFieldByType(fieldType)
 
         // Check if new post has items
-        if (posts[postId].items === undefined || posts[postId].items === null) {
-            posts[postId] = {
-                ...posts[postId],
+        if (newPosts[postId].items === undefined || newPosts[postId].items === null) {
+            newPosts[postId] = {
+                ...newPosts[postId],
                 items: []
             }
         }
 
         // Post here
-        posts[postId].items.push(newItem)
+        newPosts[postId].items.push(newItem)
 
-        return { posts: {...posts} }
+        return { posts: { ...newPosts } }
     }
 
     const deleteField = (postId, itemId) => {
 
         // delete here
-        posts[postId].items = Object.keys(posts[postId].items).filter(key => key !== itemId).map(key => (posts[postId].items[key]))
+        newPosts[postId].items = Object.keys(newPosts[postId].items).filter(key => key !== itemId).map(key => (newPosts[postId].items[key]))
 
-        return { posts: {...posts} }
+        return { posts: { ...newPosts } }
     }
 
     const changeField = (postId, itemId) => {
 
-        itemIndex = Object.keys(posts[postId].items).indexOf(itemId)
+        let itemIndex = Object.keys(newPosts[postId].items).indexOf(itemId)
 
-        posts[postId].items[itemIndex].context = action.value
+        newPosts[postId].items[itemIndex].context = action.value
 
-        return { posts: {...posts} }
+        return { posts: { ...newPosts } }
     }
 
     const deletePost = (postId) => {
-        const filteredKeys = Object.keys(posts).filter(key => key !== postId )
-        const updatedPosts = Object.assign({},  ...Array.from(filteredKeys, (key)=>({[key]:posts[key]})))
-        posts = updatedPosts
-
-        return { posts: posts }
+        const filteredKeys = Object.keys(newPosts).filter(key => key !== postId)
+        const updatedPosts = Object.assign({}, ...Array.from(filteredKeys, (key) => ({ [key]: newPosts[key] })))
+        return { posts: updatedPosts }
     }
 
     const initPosts = () => {
@@ -99,23 +97,22 @@ const reduser = (state = initialState, action) => {
     }
 
     switch (action.type) {
-        case actionTypes.addPost:
+        case actionTypes.ADD_POST:
             return addPost(action.userId)
-        case actionTypes.toggleEditMode:
+        case actionTypes.TOGGLE_EDIT_MODE:
             return toggleEditMode(action.key)
-        case actionTypes.saveChanges:
-            return saveChanges(action.key)
-        case actionTypes.addField:
+        case actionTypes.SAVE_POST:
+            return disableEditMode(action.key)
+        case actionTypes.ADD_FIELD:
             return addField(action.key, action.fieldType)
-        case actionTypes.deleteField:
+        case actionTypes.DELETE_FIELD:
             return deleteField(action.postId, action.itemId)
-        case actionTypes.changeField:
+        case actionTypes.CHANGE_FIELD:
             return changeField(action.postId, action.itemId)
-        case actionTypes.deletePost:
+        case actionTypes.DELETE_POST:
             return deletePost(action.key)
-        case actionTypes.initPosts:
+        case actionTypes.INIT_POSTS:
             return initPosts()
-
         default:
             return state;
     }

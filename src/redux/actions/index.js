@@ -1,11 +1,13 @@
 export {
     addPost,
     toggleEditMode,
-    saveChanges,
+    savePost,
     addField,
     deleteField,
-    changeField
-} from './actions'
+    changeField,
+    deletePost,
+    initPosts
+} from './posts'
 export {
     auth,
     logout,

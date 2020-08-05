@@ -21,7 +21,7 @@ class App extends Component {
     let routes = (
       <Switch>
         <Route path='/auth' component={Auth} />
-        <Route path='/home' component={() => <Posts userId={this.props.userId} />} />
+        <Route exact path='/home' component={() => <Posts userId={this.props.userId} />} />
         <Redirect to='/auth' />
       </Switch>
     )
@@ -29,7 +29,7 @@ class App extends Component {
     if (localStorage.getItem('idToken') || this.props.isAuthenticated) {
       routes = (
         <Switch>
-          <Route path='/home' component={() => <Posts userId={this.props.userId} />} />
+          <Route exact path='/home' component={() => <Posts userId={this.props.userId} />} />
           <Route path='/allposts' component={Posts} />
           <Route path='/logout' component={Logout} />
           <Redirect to='/home' />

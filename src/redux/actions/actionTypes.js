@@ -1,13 +1,13 @@
 export const actionTypes = {
-    addPost: "ADD_POST",
-    toggleEditMode: "TOGGLE_EDIT_MODE",
-    saveChanges: "SAVE_CHANGES",
-    addField: "ADD_FIELD",
-    deleteField: "DELETE_FIELD",
-    changeField: "CHANGE_FIELD",
-    deletePost: "DELETE_POST",
-    initPosts: "INIT_POSTS",
-    succesfulSingin: "SUCCESFUL_SINGIN",
-    authError: "AUTH_ERROR",
-    authLogout: "AUTH_LOGOUT"
+    ADD_POST: "ADD_POST",
+    TOGGLE_EDIT_MODE: "TOGGLE_EDIT_MODE",
+    SAVE_POST: "SAVE_POST",
+    ADD_FIELD: "ADD_FIELD",
+    DELETE_FIELD: "DELETE_FIELD",
+    CHANGE_FIELD: "CHANGE_FIELD",
+    DELETE_POST: "DELETE_POST",
+    INIT_POSTS: "INIT_POSTS",
+    SUCCESSFUL_SINGUP: "SUCCESFUL_SINGUP",
+    AUTH_ERROR: "AUTH_ERROR",
+    AUTH_LOGOUT: "AUTH_LOGOUT"
 }

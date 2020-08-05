@@ -6,7 +6,7 @@ import Aux from './../../hoc/_Aux/_Aux'
 import Post from './Post/Post'
 import PostsControls from './Controls/PostsControls/PostsControls'
 
-import { addPost, toggleEditMode, saveChanges, addField, deleteField, changeField, initPosts, deletePost } from '../../redux/actions/actions'
+import * as action from './../../redux/actions/index'
 import { Redirect } from 'react-router-dom'
 
 class Posts extends Component {
@@ -30,7 +30,7 @@ class Posts extends Component {
                 {this.props.isAuthenticated ? <PostsControls addPost={() => this.props.addPost(this.props.userId)} /> : null}
                 <div className={classes.Posts}>
                     {this.props.isAuthenticated ?
-                        Object.keys(this.props.posts).reverse().map(key => {
+                        Object.keys(this.props.posts).sort().reverse().map(key => {
                             return <Post
                                 key={key}
                                 postId={key}
@@ -42,7 +42,7 @@ class Posts extends Component {
                                 deleteField={this.props.deleteField}
                                 changeField={this.props.changeField}
                                 deletePost={() => this.props.deletePost(key)}
-                                saveChanges={() => this.props.saveChanges(this.props.posts[key], key, this.props.token)}
+                                savePost={() => this.props.savePost(this.props.posts[key], key, this.props.token)}
                             />
                         }) : null}
                 </div>
@@ -58,14 +58,14 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    addPost: (userId) => dispatch(addPost(userId)),
-    toggleEditMode: (post, key, token) => dispatch(toggleEditMode(post, key, token)),
-    saveChanges: (post, key, token) => dispatch(saveChanges(post, key, token)),
-    addField: (id, fieldType) => dispatch(addField(id, fieldType)),
-    deleteField: (postId, itemId) => dispatch(deleteField(postId, itemId)),
-    changeField: (postId, itemId, input) => dispatch(changeField(postId, itemId, input)),
-    deletePost: (postId) => dispatch(deletePost(postId)),
-    initPosts: (token, userId) => dispatch(initPosts(token, userId))
+    addPost: (userId) => dispatch(action.addPost(userId)),
+    toggleEditMode: (post, key, token) => dispatch(action.toggleEditMode(post, key, token)),
+    savePost: (post, key, token) => dispatch(action.savePost(post, key, token)),
+    addField: (id, fieldType) => dispatch(action.addField(id, fieldType)),
+    deleteField: (postId, itemId) => dispatch(action.deleteField(postId, itemId)),
+    changeField: (postId, itemId, input) => dispatch(action.changeField(postId, itemId, input)),
+    deletePost: (postId) => dispatch(action.deletePost(postId)),
+    initPosts: (token, userId) => dispatch(action.initPosts(token, userId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts)

@@ -61,7 +61,7 @@ class Post extends Component {
 
         return (
             <Aux>
-                <div onKeyUp={(event) => { if (event.keyCode !== 13) return; this.props.saveChanges() }} className={!this.props.editMode ? classes.Post : [classes.Post, classes.Editing].join(' ')}>
+                <div onKeyUp={(event) => { if (event.keyCode !== 13) return; this.props.savePost() }} className={!this.props.editMode ? classes.Post : [classes.Post, classes.Editing].join(' ')}>
                     {this.props.editMode ? editForm : content}
                     {
                         this.props.isAuthenticated && this.props.userId === this.props.authenticatedUserId ?
