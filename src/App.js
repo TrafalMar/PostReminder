@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from './stateless/Routes/Routes'
 
-import Auth from './containers/Auth/Auth'
-import Logout from './containers/Auth/Logout/Logout'
 import classes from './App.module.css';
-import Posts from './containers/Posts/Posts';
 import Menu from './containers/Menu/Menu'
 import { connect } from 'react-redux'
 import * as action from './redux/actions/index'
@@ -17,30 +15,15 @@ class App extends Component {
   }
 
   render() {
-
-    let routes = (
-      <Switch>
-        <Route path='/auth' component={Auth} />
-        <Route exact path='/home' component={() => <Posts userId={this.props.userId} />} />
-        <Redirect to='/auth' />
-      </Switch>
-    )
-
-    if (localStorage.getItem('idToken') || this.props.isAuthenticated) {
-      routes = (
-        <Switch>
-          <Route exact path='/home' component={() => <Posts userId={this.props.userId} />} />
-          <Route path='/allposts' component={Posts} />
-          <Route path='/logout' component={Logout} />
-          <Redirect to='/home' />
-        </Switch>
-      )
-    }
     return (
       <Router>
         <div className={classes.App}>
-          <Menu />
-          {routes}
+          <div className={classes.Menu}>
+            <Menu />
+          </div>
+          <div className={classes.Content}>
+            <Routes {...this.props} />
+          </div>
         </div>
       </Router>
     )

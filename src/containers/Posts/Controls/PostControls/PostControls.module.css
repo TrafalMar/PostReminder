@@ -4,3 +4,10 @@
     justify-content: flex-end;
 }
 
+.PostControls{
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    justify-content: flex-end;
+    background: rgba(255,255,255,1);
+}

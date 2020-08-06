@@ -37,7 +37,7 @@ class Auth extends Component {
                     <form onSubmit={this.submitHandler}>
                         <h3>{this.state.isSignUp ? 'Registering new account' : 'Entering in account'}</h3>
                         <input type='input' placeholder='email' onChange={(event) => this.setState({ email: event.target.value })} />
-                        <input type='input' placeholder='password' onChange={(event) => this.setState({ password: event.target.value })} />
+                        <input type='password' placeholder='password' onChange={(event) => this.setState({ password: event.target.value })} />
                         <h4 style={{color:"red"}}>{this.props.state.errorMessage ? this.props.state.errorMessage : null}</h4>
                         <div className={classes.ButtonsPanel}>
                             <Button color='green' onClick={this.submitHandler}>SUBMIT</Button>

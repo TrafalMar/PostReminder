@@ -17,7 +17,7 @@ class Post extends Component {
         if (this.props.items !== null && this.props.items !== undefined) {
             Object.keys(this.props.items).map(key => {
 
-                editForm.push(<CustomButton key={'button' + key} color='red' style={{ fontSize: '16px', padding: "5px 0 0 0", height: "auto", marginLeft: 'auto' }} onClick={() => this.props.deleteField(this.props.postId, key)} ><FaTimes /></CustomButton>)
+                editForm.push(<CustomButton key={'button' + key} color='red' style={{ fontSize: '16px', padding: "5px 0 10px  0", height: "auto", marginLeft: 'auto' }} onClick={() => this.props.deleteField(this.props.postId, key)} ><FaTimes /></CustomButton>)
 
                 switch (this.props.items[key].type) {
                     case 'Title':
@@ -65,7 +65,7 @@ class Post extends Component {
                     {this.props.editMode ? editForm : content}
                     {
                         this.props.isAuthenticated && this.props.userId === this.props.authenticatedUserId ?
-                            <PostControls deletePost={this.props.deletePost} editMode={this.props.editMode} editToggler={this.props.editToggler} addFieldHandler={this.props.addFieldHandler} postId={this.props.postId} />
+                            <div className={classes.PostControls}><PostControls deletePost={this.props.deletePost} editMode={this.props.editMode} editToggler={this.props.editToggler} addFieldHandler={this.props.addFieldHandler} postId={this.props.postId} /></div>
                             : null
                     }
                 </div >

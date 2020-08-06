@@ -34,7 +34,7 @@ class PostControls extends Component {
     render() {
 
         return (
-            <div className={!this.state.isDeleting ? classes.ToolBar : classes.Deleting}>
+            <div className={classes.PostControls}>
                 {
                     this.state.isDeleting ?
                         <Aux >
