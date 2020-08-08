@@ -1,5 +1,5 @@
 
-import { FaPencilAlt, FaSave, FaPlus, FaTrash } from 'react-icons/fa'
+import { FaPencilAlt, FaSave, FaPlus, FaTrash, FaCog } from 'react-icons/fa'
 import React, { Component } from 'react'
 
 import Menu from '@material-ui/core/Menu';
@@ -39,16 +39,15 @@ class PostControls extends Component {
                     this.state.isDeleting ?
                         <Aux >
                             <CustomButton color="red" bold="true" onClick={this.props.deletePost}>YES</CustomButton>
-                            <CustomButton color="green" bold="true" onClick={() => this.deletingHandler(false)}>NO</CustomButton>
+                            <CustomButton color="green" bold="true" style={{marginRight:'auto'}} onClick={() => this.deletingHandler(false)}>NO</CustomButton>
                         </Aux>
                         : <Aux>
                             {
                                 this.props.editMode ?
                                     <Aux>
                                         <CustomButton color="red" style={{marginRight:'auto'}} onClick={() => this.deletingHandler(true)}><FaTrash /></CustomButton>
-                                        <CustomButton color="green" onClick={this.handleClickOnPlus} >
-                                            <FaPlus />
-                                        </CustomButton>
+                                        { this.props.settingsImplemented ? <CustomButton color='gray' style={{marginRight:'auto'}} ><FaCog/></CustomButton> : null}
+                                        <CustomButton color="green" onClick={this.handleClickOnPlus} ><FaPlus /></CustomButton>
                                     </Aux>
                                     : null
                             }
@@ -63,7 +62,7 @@ class PostControls extends Component {
                                 <MenuItem onClick={() => { this.handleCloseMenu(this.props.postId, 'Paragraph') }}>Paragraph</MenuItem>
                                 <MenuItem onClick={() => { this.handleCloseMenu(this.props.postId, 'Image') }}>Image</MenuItem>
                             </Menu>
-
+                            
                             <CustomButton color="red" onClick={this.props.editToggler}>{this.props.editMode ? <FaSave /> : <FaPencilAlt />}</CustomButton>
                         </Aux>
                 }

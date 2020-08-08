@@ -12,9 +12,12 @@ const reduser = (state = initialState, action) => {
 
         const newPost = ({
             items: [],
+            settings:{
+                private: true
+            },
             editMode: false,
             userId: userId,
-            date: action.time
+            date: action.time,
         })
 
         return { posts: { ...newPosts, [action.time + userId]: newPost } }
@@ -89,7 +92,12 @@ const reduser = (state = initialState, action) => {
     const deletePost = (postId) => {
         const filteredKeys = Object.keys(newPosts).filter(key => key !== postId)
         const updatedPosts = Object.assign({}, ...Array.from(filteredKeys, (key) => ({ [key]: newPosts[key] })))
-        return { posts: updatedPosts }
+        return { posts: {...updatedPosts} }
+    }
+
+    const togglePostPrivacy = (postId)=>{
+        newPosts[postId].settings.private = !newPosts[postId].settings.private
+        return {posts : {...newPosts}}
     }
 
     const initPosts = () => {
@@ -111,6 +119,8 @@ const reduser = (state = initialState, action) => {
             return changeField(action.postId, action.itemId)
         case actionTypes.DELETE_POST:
             return deletePost(action.key)
+        case actionTypes.TOGGLE_POST_PRIVACY:
+            return togglePostPrivacy(action.postId)
         case actionTypes.INIT_POSTS:
             return initPosts()
         default:

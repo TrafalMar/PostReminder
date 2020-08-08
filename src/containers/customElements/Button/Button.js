@@ -8,6 +8,7 @@ const Button = (props) => {
     switch(props.color){
         case 'red': styles.push(classes.Red);break;
         case 'green': styles.push(classes.Green);break;
+        case 'gray': styles.push(classes.Gray);break;
         default: styles.push(classes.Black);break;
     }
 

@@ -38,11 +38,12 @@ class Posts extends Component {
                                 items={this.props.posts[key].items}
                                 editMode={this.props.posts[key].editMode}
                                 editToggler={() => this.props.toggleEditMode(this.props.posts[key], key, this.props.token)}
+                                savePost={() => this.props.savePost(this.props.posts[key], key, this.props.token)}
                                 addFieldHandler={this.props.addField}
                                 deleteField={this.props.deleteField}
                                 changeField={this.props.changeField}
                                 deletePost={() => this.props.deletePost(key)}
-                                savePost={() => this.props.savePost(this.props.posts[key], key, this.props.token)}
+                                settingsImplemented = {this.props.posts[key].settings}
                             />
                         }) : null}
                 </div>
@@ -59,7 +60,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     addPost: (userId) => dispatch(action.addPost(userId)),
-    toggleEditMode: (post, key, token) => dispatch(action.toggleEditMode(post, key, token)),
+    toggleEditMode: (editMode, key, token) => dispatch(action.toggleEditMode(editMode, key, token)),
     savePost: (post, key, token) => dispatch(action.savePost(post, key, token)),
     addField: (id, fieldType) => dispatch(action.addField(id, fieldType)),
     deleteField: (postId, itemId) => dispatch(action.deleteField(postId, itemId)),

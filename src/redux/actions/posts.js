@@ -84,7 +84,8 @@ const setPosts = (posts) => {
 const getQueryParams = (token, userId = null) => {
     const authPart = `?auth=` + token
     const getUserPart = `&orderBy="userId"&equalTo="` + userId + `"`;
-    return userId ? authPart + getUserPart : authPart
+    const getPublicPostsPart = `&orderBy="settings/private"&equalTo=false`
+    return userId ? authPart + getUserPart : authPart+ getPublicPostsPart
 }
 
 const interpretDataFromFirebase = (res) => {
@@ -97,6 +98,13 @@ const interpretDataFromFirebase = (res) => {
         })
     } else {
         return res.data
+    }
+}
+
+export const togglePostPrivacy = (postId) =>{
+    return {
+        type: actionTypes.TOGGLE_POST_PRIVACY,
+        postId
     }
 }
 

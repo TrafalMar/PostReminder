@@ -1,11 +1,13 @@
 .App {
+    display: flex;
+    position: relative;
+    justify-content: space-around;
     width: 100%;
     box-sizing: border-box;
-    justify-content: center;
-    display: flex;
 }
 
-.App .Menu,
-.App .Content{
-    
+.App .Menu{
+    position: absolute;
+    left: 0;
+    width: 90px;
 }
