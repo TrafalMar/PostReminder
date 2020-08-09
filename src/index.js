@@ -8,10 +8,12 @@ import thunk from 'redux-thunk'
 import * as serviceWorker from './serviceWorker';
 import posts from './redux/redusers/posts'
 import auth from './redux/redusers/auth'
+import backdrop from './redux/redusers/backdrop'
 
 const redusers = combineReducers({
   posts,
-  auth
+  auth,
+  backdrop
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

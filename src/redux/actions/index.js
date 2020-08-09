@@ -13,3 +13,9 @@ export {
     logout,
     checkAuthOnReload
 } from './auth'
+export {
+    openBackdrop,
+    openSettings,
+    closeBackdrop,
+    closeSettings,
+} from './backdrop'

@@ -17,12 +17,18 @@ class Posts extends Component {
         }
     }
 
+    componentDidUpdate(){
+        console.log("[Posts]");
+      }
+
     render() {
 
         let authRedirect = null
         if (!this.props.isAuthenticated) {
             authRedirect = <Redirect to='/auth' />
         }
+
+        
 
         return (
             <Aux>

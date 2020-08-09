@@ -11,6 +11,10 @@ import Aux from '../../../../hoc/_Aux/_Aux';
 
 class PostControls extends Component {
 
+    componentDidUpdate(){
+        console.log("[PostControls]");
+      }
+
     state = {
         anchorEl: null,
         isDeleting: false
@@ -29,8 +33,6 @@ class PostControls extends Component {
         this.setState((prevState) => ({ ...prevState, isDeleting: param }))
     }
 
-
-
     render() {
 
         return (
@@ -46,7 +48,7 @@ class PostControls extends Component {
                                 this.props.editMode ?
                                     <Aux>
                                         <CustomButton color="red" style={{marginRight:'auto'}} onClick={() => this.deletingHandler(true)}><FaTrash /></CustomButton>
-                                        { this.props.settingsImplemented ? <CustomButton color='gray' style={{marginRight:'auto'}} ><FaCog/></CustomButton> : null}
+                                        { this.props.settingsImplemented ? <CustomButton color='gray' style={{marginRight:'auto'}} onClick={this.props.openSettings}><FaCog/></CustomButton> : null}
                                         <CustomButton color="green" onClick={this.handleClickOnPlus} ><FaPlus /></CustomButton>
                                     </Aux>
                                     : null

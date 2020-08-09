@@ -4,11 +4,16 @@ import Aux from '../../../hoc/_Aux/_Aux'
 import UploadFile from './UploadFile/UploadFile'
 import { FaTimes } from 'react-icons/fa'
 import CustomButton from './../../customElements/Button/Button'
+import * as action from './../../../redux/actions/index'
 
 import classes from './Post.module.css'
 import { connect } from 'react-redux'
 
 class Post extends Component {
+
+    componentDidUpdate(){
+        console.log("[Post]");
+      }
 
     render() {
         const content = []
@@ -63,7 +68,7 @@ class Post extends Component {
 
         return (
             <Aux>
-                <div onKeyUp={(event)=>onEnterClick(event)}
+                <div onKeyUp={(event) => onEnterClick(event)}
                     className={!this.props.editMode ? classes.Post : [classes.Post, classes.Editing].join(' ')}>
                     {this.props.editMode ? editForm : content}
                     {
@@ -75,6 +80,7 @@ class Post extends Component {
                                     editMode={this.props.editMode}
                                     editToggler={this.props.editToggler}
                                     addFieldHandler={this.props.addFieldHandler}
+                                    openSettings={this.props.openSettings}
                                     postId={this.props.postId} /></div>
                             : null
                     }
@@ -89,4 +95,8 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.token !== null
 })
 
-export default connect(mapStateToProps, null)(Post)
+const mapDispatchToProps = dispatch => ({
+    openSettings: () => dispatch(action.openSettings())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post)
