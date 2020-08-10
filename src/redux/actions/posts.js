@@ -85,7 +85,7 @@ const getQueryParams = (token, userId = null) => {
     const authPart = `?auth=` + token
     const getUserPart = `&orderBy="userId"&equalTo="` + userId + `"`;
     const getPublicPostsPart = `&orderBy="settings/private"&equalTo=false`
-    return userId ? authPart + getUserPart : authPart+ getPublicPostsPart
+    return userId ? authPart + getUserPart : authPart + getPublicPostsPart
 }
 
 const interpretDataFromFirebase = (res) => {
@@ -101,13 +101,6 @@ const interpretDataFromFirebase = (res) => {
     }
 }
 
-export const togglePostPrivacy = (postId) =>{
-    return {
-        type: actionTypes.TOGGLE_POST_PRIVACY,
-        postId
-    }
-}
-
 export const initPosts = (token, userId) => {
     return dispatch => {
         let queryParams = getQueryParams(token, userId)
@@ -118,4 +111,21 @@ export const initPosts = (token, userId) => {
             console.log(err);
         })
     }
+}
+
+export const openSettings = (postId) => (
+    { type: actionTypes.OPEN_SETTINGS, postId }
+)
+
+export const savePostAndCloseSettings = (post, key, token) => {
+    API.put(`/posts/${key}.json?auth=` + token, {
+        ...post
+    })
+    return { type: actionTypes.CLOSE_SETTINGS }
+}
+
+export const closeSettings = () => ({ type: actionTypes.CLOSE_SETTINGS })
+
+export const togglePostPrivacy = () => {
+    return { type: actionTypes.TOGGLE_POST_PRIVACY }
 }

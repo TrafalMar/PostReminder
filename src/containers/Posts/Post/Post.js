@@ -11,10 +11,6 @@ import { connect } from 'react-redux'
 
 class Post extends Component {
 
-    componentDidUpdate(){
-        console.log("[Post]");
-      }
-
     render() {
         const content = []
         const editForm = []
@@ -65,6 +61,10 @@ class Post extends Component {
         }
 
         const onEnterClick = (event) => { if (event.keyCode !== 13) return; this.props.savePost() }
+        const openSettingsWithBackdrop = (postId) =>{
+            this.props.openBackdrop()
+            this.props.openSettings(postId)
+        }
 
         return (
             <Aux>
@@ -80,7 +80,7 @@ class Post extends Component {
                                     editMode={this.props.editMode}
                                     editToggler={this.props.editToggler}
                                     addFieldHandler={this.props.addFieldHandler}
-                                    openSettings={this.props.openSettings}
+                                    openSettings={()=>{openSettingsWithBackdrop(this.props.postId)}}
                                     postId={this.props.postId} /></div>
                             : null
                     }
@@ -96,7 +96,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    openSettings: () => dispatch(action.openSettings())
+    openSettings: (postId) => dispatch(action.openSettings(postId)),
+    openBackdrop: () => dispatch(action.openBackdrop()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

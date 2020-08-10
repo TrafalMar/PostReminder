@@ -13,7 +13,7 @@ import backdrop from './redux/redusers/backdrop'
 const redusers = combineReducers({
   posts,
   auth,
-  backdrop
+  backdrop,
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

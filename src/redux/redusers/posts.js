@@ -1,7 +1,9 @@
 import { actionTypes } from '../actions/actionTypes'
 
 const initialState = {
-    posts: {}
+    posts: {},
+    showSettings: false,
+    focusedPostId: null
 }
 
 const reduser = (state = initialState, action) => {
@@ -12,7 +14,7 @@ const reduser = (state = initialState, action) => {
 
         const newPost = ({
             items: [],
-            settings:{
+            settings: {
                 private: true
             },
             editMode: false,
@@ -20,14 +22,14 @@ const reduser = (state = initialState, action) => {
             date: action.time,
         })
 
-        return { posts: { ...newPosts, [action.time + userId]: newPost } }
+        return { ...state, posts: { ...newPosts, [action.time + userId]: newPost } }
     }
 
     const toggleEditMode = (postId) => {
 
         newPosts[postId].editMode = !newPosts[postId].editMode
 
-        return { posts: { ...newPosts } }
+        return { ...state, posts: { ...newPosts } }
 
     }
 
@@ -35,7 +37,7 @@ const reduser = (state = initialState, action) => {
 
         newPosts[postId].editMode = false;
 
-        return { posts: { ...newPosts } };
+        return { ...state, posts: { ...newPosts } };
     }
 
     const addField = (postId, fieldType) => {
@@ -69,7 +71,7 @@ const reduser = (state = initialState, action) => {
         // Post here
         newPosts[postId].items.push(newItem)
 
-        return { posts: { ...newPosts } }
+        return { ...state, posts: { ...newPosts } }
     }
 
     const deleteField = (postId, itemId) => {
@@ -77,7 +79,7 @@ const reduser = (state = initialState, action) => {
         // delete here
         newPosts[postId].items = Object.keys(newPosts[postId].items).filter(key => key !== itemId).map(key => (newPosts[postId].items[key]))
 
-        return { posts: { ...newPosts } }
+        return { ...state, posts: { ...newPosts } }
     }
 
     const changeField = (postId, itemId) => {
@@ -86,22 +88,35 @@ const reduser = (state = initialState, action) => {
 
         newPosts[postId].items[itemIndex].context = action.value
 
-        return { posts: { ...newPosts } }
+        return { ...state, posts: { ...newPosts } }
     }
 
     const deletePost = (postId) => {
         const filteredKeys = Object.keys(newPosts).filter(key => key !== postId)
         const updatedPosts = Object.assign({}, ...Array.from(filteredKeys, (key) => ({ [key]: newPosts[key] })))
-        return { posts: {...updatedPosts} }
-    }
-
-    const togglePostPrivacy = (postId)=>{
-        newPosts[postId].settings.private = !newPosts[postId].settings.private
-        return {posts : {...newPosts}}
+        return { ...state, posts: { ...updatedPosts } }
     }
 
     const initPosts = () => {
-        return { posts: action.posts }
+        return {...state, posts: action.posts }
+    }
+
+    const openSettings = (action) => (
+        {
+            ...state,
+            showSettings: true,
+            focusedPostId: action.postId,
+            focusedPost: newPosts[action.postId]
+        }
+    )
+
+    const closeSettings = () => (
+        { ...state, showSettings: false }
+    )
+
+    const togglePostPrivacy = () => {
+        newPosts[state.focusedPostId].settings.private = !newPosts[state.focusedPostId].settings.private
+        return { ...state, posts:{...newPosts}}
     }
 
     switch (action.type) {
@@ -123,6 +138,12 @@ const reduser = (state = initialState, action) => {
             return togglePostPrivacy(action.postId)
         case actionTypes.INIT_POSTS:
             return initPosts()
+        case actionTypes.OPEN_SETTINGS:
+            return openSettings(action)
+        case actionTypes.CLOSE_SETTINGS:
+            return closeSettings()
+        case actionTypes.TOGGLE_POST_PRIVACY:
+            return togglePostPrivacy(action.post)
         default:
             return state;
     }

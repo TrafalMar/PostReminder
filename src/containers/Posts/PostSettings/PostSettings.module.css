@@ -1,5 +1,7 @@
 .PostSettings{
     position: fixed;
+    display: flex;
+    flex-direction: column;
     right:0;
     left: 0;
     top:100px;

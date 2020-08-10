@@ -15,10 +15,6 @@ class App extends Component {
     this.props.tryAutoSingIn()
   }
 
-  componentDidUpdate(){
-    console.log("[App]");
-  }
-
   render() {
 
     return (

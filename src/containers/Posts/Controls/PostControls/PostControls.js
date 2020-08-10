@@ -11,10 +11,6 @@ import Aux from '../../../../hoc/_Aux/_Aux';
 
 class PostControls extends Component {
 
-    componentDidUpdate(){
-        console.log("[PostControls]");
-      }
-
     state = {
         anchorEl: null,
         isDeleting: false

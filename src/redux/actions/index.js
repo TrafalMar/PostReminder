@@ -6,7 +6,11 @@ export {
     deleteField,
     changeField,
     deletePost,
-    initPosts
+    initPosts,
+    openSettings,
+    savePostAndCloseSettings,
+    togglePostPrivacy,
+    closeSettings
 } from './posts'
 export {
     auth,
@@ -15,7 +19,5 @@ export {
 } from './auth'
 export {
     openBackdrop,
-    openSettings,
     closeBackdrop,
-    closeSettings,
 } from './backdrop'
