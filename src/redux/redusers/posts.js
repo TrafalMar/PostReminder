@@ -1,4 +1,5 @@
 import { actionTypes } from '../actions/actionTypes'
+import { List } from '@material-ui/core';
 
 const initialState = {
     posts: {},
@@ -47,9 +48,9 @@ const reduser = (state = initialState, action) => {
         const getNewFieldByType = (elementType) => {
             switch (elementType) {
                 case 'Title':
-                    return { type: 'Title', context: 'New Title', id: Date.now() }
+                    return { type: 'Title', context: '', id: Date.now() }
                 case 'Paragraph':
-                    return { type: 'Paragraph', context: 'New Paragrapth', id: Date.now() }
+                    return { type: 'Paragraph', context: '', id: Date.now() }
                 case 'Image':
                     return { type: 'Image', context: '', id: Date.now() }
                 default:
@@ -60,7 +61,7 @@ const reduser = (state = initialState, action) => {
 
         const newItem = getNewFieldByType(fieldType)
 
-        // Check if new post has items
+        // Check if new post has items if no then create new array of items
         if (newPosts[postId].items === undefined || newPosts[postId].items === null) {
             newPosts[postId] = {
                 ...newPosts[postId],
@@ -98,7 +99,7 @@ const reduser = (state = initialState, action) => {
     }
 
     const initPosts = () => {
-        return {...state, posts: action.posts }
+        return { ...state, posts: action.posts }
     }
 
     const openSettings = (action) => (
@@ -116,7 +117,23 @@ const reduser = (state = initialState, action) => {
 
     const togglePostPrivacy = () => {
         newPosts[state.focusedPostId].settings.private = !newPosts[state.focusedPostId].settings.private
-        return { ...state, posts:{...newPosts}}
+        return { ...state, posts: { ...newPosts } }
+    }
+
+    const dragHappened = (action) => {
+
+        const { droppableIdStart,
+            droppableIdEnd,
+            droppableIndexStart,
+            droppableIndexEnd,
+            draggableId } = action.payload
+
+        // In the same list
+        if (droppableIdStart === droppableIdEnd) {
+            const item = newPosts[droppableIdStart].items.splice(droppableIndexStart, 1)
+            newPosts[droppableIdStart].items.splice(droppableIndexEnd, 0, ...item)
+        }
+        return { ...state, posts: { ...newPosts } }
     }
 
     switch (action.type) {
@@ -144,6 +161,8 @@ const reduser = (state = initialState, action) => {
             return closeSettings()
         case actionTypes.TOGGLE_POST_PRIVACY:
             return togglePostPrivacy(action.post)
+        case actionTypes.DRAG_HAPPENED:
+            return dragHappened(action)
         default:
             return state;
     }

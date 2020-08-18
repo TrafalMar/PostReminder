@@ -8,6 +8,7 @@ import PostsControls from './Controls/PostsControls/PostsControls'
 
 import * as action from './../../redux/actions/index'
 import { Redirect } from 'react-router-dom'
+import { DragDropContext } from "react-beautiful-dnd"
 
 class Posts extends Component {
 
@@ -24,30 +25,49 @@ class Posts extends Component {
             authRedirect = <Redirect to='/auth' />
         }
 
+        const onDragEnd = (result) => {
+            const { destination, source, draggableId } = result
+
+            if (!destination) {
+                return
+            }
+
+            this.props.sort(
+                source.droppableId,
+                destination.droppableId,
+                source.index,
+                destination.index,
+                draggableId
+            )
+
+        }
+
         return (
-            <Aux>
-                {authRedirect}
-                {this.props.isAuthenticated ? <PostsControls addPost={() => this.props.addPost(this.props.userId)} /> : null}
-                <div className={classes.Posts}>
-                    {this.props.isAuthenticated ?
-                        Object.keys(this.props.posts).sort().reverse().map(key => {
-                            return <Post
-                                key={key}
-                                postId={key}
-                                userId={this.props.posts[key].userId}
-                                items={this.props.posts[key].items}
-                                editMode={this.props.posts[key].editMode}
-                                editToggler={() => this.props.toggleEditMode(this.props.posts[key], key, this.props.token)}
-                                savePost={() => this.props.savePost(this.props.posts[key], key, this.props.token)}
-                                addFieldHandler={this.props.addField}
-                                deleteField={this.props.deleteField}
-                                changeField={this.props.changeField}
-                                deletePost={() => this.props.deletePost(key)}
-                                settingsImplemented = {this.props.posts[key].settings}
-                            />
-                        }) : null}
-                </div>
-            </Aux>
+            <DragDropContext onDragEnd={onDragEnd}>
+                <Aux>
+                    {authRedirect}
+                    {this.props.isAuthenticated ? <PostsControls addPost={() => this.props.addPost(this.props.userId)} /> : null}
+                    <div className={classes.Posts}>
+                        {this.props.isAuthenticated ?
+                            Object.keys(this.props.posts).sort().reverse().map(key => {
+                                return <Post
+                                    key={key}
+                                    postId={key}
+                                    userId={this.props.posts[key].userId}
+                                    items={this.props.posts[key].items}
+                                    editMode={this.props.posts[key].editMode}
+                                    editToggler={() => this.props.toggleEditMode(this.props.posts[key], key, this.props.token)}
+                                    savePost={() => this.props.savePost(this.props.posts[key], key, this.props.token)}
+                                    addFieldHandler={this.props.addField}
+                                    deleteField={this.props.deleteField}
+                                    changeField={this.props.changeField}
+                                    deletePost={() => this.props.deletePost(key)}
+                                    settingsImplemented={this.props.posts[key].settings}
+                                />
+                            }) : null}
+                    </div>
+                </Aux>
+            </DragDropContext>
         )
     }
 }
@@ -66,7 +86,8 @@ const mapDispatchToProps = (dispatch) => ({
     deleteField: (postId, itemId) => dispatch(action.deleteField(postId, itemId)),
     changeField: (postId, itemId, input) => dispatch(action.changeField(postId, itemId, input)),
     deletePost: (postId) => dispatch(action.deletePost(postId)),
-    initPosts: (token, userId) => dispatch(action.initPosts(token, userId))
+    initPosts: (token, userId) => dispatch(action.initPosts(token, userId)),
+    sort: (sId, eId, sIndex, eIndex, dId) => dispatch(action.sort(sId, eId, sIndex, eIndex, dId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Posts)

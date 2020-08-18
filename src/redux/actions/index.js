@@ -10,7 +10,8 @@ export {
     openSettings,
     savePostAndCloseSettings,
     togglePostPrivacy,
-    closeSettings
+    closeSettings,
+    sort
 } from './posts'
 export {
     auth,

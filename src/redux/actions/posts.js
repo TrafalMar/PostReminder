@@ -74,6 +74,24 @@ export const changeField = (postId, itemId, event) => ({
     value: event.target.value
 })
 
+export const sort = (
+    droppableIdStart,
+    droppableIdEnd,
+    droppableIndexStart,
+    droppableIndexEnd,
+    draggableId) => {
+    return {
+        type: actionTypes.DRAG_HAPPENED,
+        payload: {
+            droppableIdStart,
+            droppableIdEnd,
+            droppableIndexStart,
+            droppableIndexEnd,
+            draggableId
+        }
+    }
+}
+
 const setPosts = (posts) => {
     return {
         type: actionTypes.INIT_POSTS,
