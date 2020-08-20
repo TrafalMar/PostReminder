@@ -1,38 +1,38 @@
-.Container{
-    text-align: center;
+.Container {
+  text-align: center;
 }
 
 .Auth {
-    display: inline-flex;
-    justify-content: center;
-    align-self: center;
-    margin: auto;
-    width:300px;
-    box-sizing: border-box;
-    padding: 10px 30px;
-    box-shadow: 0 0 5px rgba(0,0,0,.2);
+  display: inline-flex;
+  justify-content: center;
+  align-self: center;
+  margin: auto;
+  width: 300px;
+  box-sizing: border-box;
+  padding: 10px 30px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Input styles */
 
-.Auth input{
-    display: block;
-    border-radius: 0;
-    border: 1px solid gray;
-    padding: 5px 15px;
-    margin: 5px auto;
+.Auth input {
+  display: block;
+  border-radius: 0;
+  border: 1px solid gray;
+  padding: 5px 15px;
+  margin: 5px auto;
 }
 
-.Auth input:focus{
-    outline: none;
+.Auth input:focus {
+  outline: none;
 }
 
 /* Button styles */
 
 .Auth .ButtonsPanel {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
-.Auth Button:hover{
-    background: rgb(231, 230, 230, .2);
+.Auth Button:hover {
+  background: rgb(231, 230, 230, 0.2);
 }
