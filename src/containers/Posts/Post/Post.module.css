@@ -1,29 +1,29 @@
-.Post{
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    box-sizing: border-box;
-    width: 300px;
-    border: 1px solid rgba(0,0,0,.05);
-    box-shadow: 0 0 10px rgba(0,0,0,.05);
-    background: white;
-    margin: 10px;
-    padding: 20px 10px 50px 10px;
-    box-sizing: border-box;
-    height:100%;
-    overflow: hidden;
+.Post {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-sizing: border-box;
+  width: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  background: white;
+  margin: 10px;
+  padding: 20px 10px 50px 10px;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden;
 }
 
 .Post .PostControls {
-    position: absolute;
-    width: inherit;
-    box-sizing: border-box;
-    bottom: 0;
-    left: 0;
-    /* right:0; */
+  position: absolute;
+  width: inherit;
+  box-sizing: border-box;
+  bottom: 0;
+  left: 0;
+  /* right:0; */
 }
 
 .Editing {
-    border: 1px solid rgba(255,0,0,.1);
-    box-shadow: 0 0 10px rgba(255,0,0,.2);
+  border: 1px solid rgba(255, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
 }

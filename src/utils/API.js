@@ -1,6 +1,6 @@
-import axios from 'axios'
+import axios from "axios";
 
 export default axios.create({
-    baseURL:'https://trafalmarsreminder.firebaseio.com/',
-    responseType: "json",
-})
+  baseURL: "https://trafalmarsreminder.firebaseio.com/",
+  responseType: "json",
+});

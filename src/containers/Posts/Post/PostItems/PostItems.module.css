@@ -1,100 +1,99 @@
-.PostItem{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+.PostItem {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-.EditLine{
-    display: grid;
-    place-items: center;
-    grid-template-columns:auto 1fr;
-    margin: 0 0 10px 0;
+.EditLine {
+  display: grid;
+  place-items: center;
+  grid-template-columns: auto 1fr;
+  margin: 0 0 10px 0;
 }
 
-.Handle{
-    display: grid;
-    place-items: center;
-    color: gray;
-    font-size: 20px;
-    width: 30px;
+.Handle {
+  display: grid;
+  place-items: center;
+  color: gray;
+  font-size: 20px;
+  width: 30px;
 }
 
-.Handle:hover{
-    color: black;
-    cursor: pointer;
+.Handle:hover {
+  color: black;
+  cursor: pointer;
 }
 
 .Header,
 .Details {
-    border: 1px solid transparent;
+  border: 1px solid transparent;
 }
 
 .DetailsEditLine,
-.HeaderEditLine{
-    border: 1px dashed black;
+.HeaderEditLine {
+  border: 1px dashed black;
 }
 
 .Header,
 .HeaderEditLine {
-    min-height: 45px;
-    font-size: 24px;
-    font-weight: 500;
-    width: 100%;
-    padding: 5px 15px;
-    box-sizing: border-box;
-    margin: 0;
-    /* text-align: justify; */
+  min-height: 45px;
+  font-size: 24px;
+  font-weight: 500;
+  width: 100%;
+  padding: 5px 15px;
+  box-sizing: border-box;
+  margin: 0;
+  /* text-align: justify; */
 }
 
 .Header {
-    text-align: center;
+  text-align: center;
 }
 
 .Details,
 .DetailsEditLine,
 .ImageEditLine {
-    display: block;
-    min-height: 33px;
-    width: 100%;
-    font-size: 16px;
-    padding: 5px 15px;
-    box-sizing: border-box;
-    text-align: justify;
+  display: block;
+  min-height: 33px;
+  width: 100%;
+  font-size: 16px;
+  padding: 5px 15px;
+  box-sizing: border-box;
+  text-align: justify;
 }
 
-.ImageEditLine{
-    margin: 0;
+.ImageEditLine {
+  margin: 0;
 }
 
-.Image{
-    display: block;
-    width: 100%;
-    height: auto;
+.Image {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .DeleteButton {
-    border: none;
-    background: none;
+  border: none;
+  background: none;
 
-    display: flex;
-    justify-content: center;
-    align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-self: flex-end;
 
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 
-    color:red;
-    outline: none;
-    font-size: 16px;
-
+  color: red;
+  outline: none;
+  font-size: 16px;
 }
 
 .DeleteButton svg {
-    position: relative;
-    top: calc(50% - 8px);
+  position: relative;
+  top: calc(50% - 8px);
 }
 
-.DeleteButton:hover{
-    cursor: pointer;
-    color: black;
+.DeleteButton:hover {
+  cursor: pointer;
+  color: black;
 }
